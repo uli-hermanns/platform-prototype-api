@@ -17,10 +17,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "platform_prototype_api": {
+    "Platform Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
