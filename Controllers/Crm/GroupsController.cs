@@ -9,7 +9,6 @@ using Platform.Api.Dtos.Crm;
 
 namespace Platform.Api.Controllers.Crm
 {
-   // [Area("Crm")]
    public class GroupsController : ControllerBase
    {
       [HttpGet]

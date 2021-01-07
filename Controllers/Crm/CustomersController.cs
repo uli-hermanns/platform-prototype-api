@@ -14,7 +14,6 @@ namespace Platform.Api.Controllers.Crm
    {
       [HttpGet]
       [EnableQuery()]
-      [ODataRoute("crm/customers")]
       public IEnumerable<CustomerDto> Get()
       {
          yield return new CustomerDto { Key = "Schmitz", Representative = new Dtos.Hrm.EmployeeDto { Key = "Uli" } };
@@ -22,10 +21,10 @@ namespace Platform.Api.Controllers.Crm
       }
 
       [HttpGet]
+      [EnableQuery()]
       public CustomerDto Get(string key)
       {
          return this.Get().Single(dto => dto.Key == key);
       }
-
    }
 }

@@ -10,12 +10,10 @@ using Platform.Api.Dtos.Hrm;
 
 namespace Platform.Api.Controllers.Hrm
 {
-   // [Area("Hrm")]
    public class EmployeesController : ControllerBase
    {
       [HttpGet]
       [EnableQuery()]
-      // [ODataRoute("Hrm/Employees")]
       public IEnumerable<EmployeeDto> Get()
       {
          yield return new EmployeeDto { Key = "Ben" };
