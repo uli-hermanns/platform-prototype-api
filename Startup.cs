@@ -51,6 +51,7 @@ namespace platform_prototype_api
 
          app.UseEndpoints(endpoints =>
          {
+            endpoints.MapControllers();
             endpoints.Select().Filter().Expand();
             endpoints.MapODataRoute("CRM", "crm", this.GetCrmEdmModel());
             endpoints.MapODataRoute("HRM", "hrm", this.GetHrmEdmModel());
@@ -62,8 +63,6 @@ namespace platform_prototype_api
          var builder = new ODataConventionModelBuilder();
          builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
          builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
-         // builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
-         // builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
 
          return builder.GetEdmModel();
       }
@@ -71,8 +70,7 @@ namespace platform_prototype_api
       public IEdmModel GetHrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
-         // builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
-         // builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
+         builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
          builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
 
          return builder.GetEdmModel();

@@ -10,7 +10,7 @@ using Platform.Api.Dtos.Hrm;
 
 namespace Platform.Api.Controllers.Hrm
 {
-   [Area("Hrm")]
+   // [Area("Hrm")]
    public class EmployeesController : ControllerBase
    {
       [HttpGet]
