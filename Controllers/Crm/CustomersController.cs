@@ -9,22 +9,23 @@ using Platform.Api.Dtos.Crm;
 
 namespace Platform.Api.Controllers.Crm
 {
-   // [Area("Crm")]
-   public class CustomersController : ControllerBase
+   [EnableQuery()]
+   public class CustomersController : ODataController
    {
-      [HttpGet]
-      [EnableQuery()]
       public IEnumerable<CustomerDto> Get()
       {
-         yield return new CustomerDto { Key = "Schmitz", Representative = new Dtos.Hrm.EmployeeDto { Key = "Uli" } };
-         yield return new CustomerDto { Key = "Müller", Representative = new Dtos.Hrm.EmployeeDto { Key = "Ben" } };
+         yield return new CustomerDto { Key = "Schmitz", Representative = new Dtos.Hrm.EmployeeDto { Key = "Uli" }, RepresentativeKey = "Uli" };
+         yield return new CustomerDto { Key = "Müller", Representative = new Dtos.Hrm.EmployeeDto { Key = "Ben" }, RepresentativeKey = "Ben" };
       }
 
-      [HttpGet]
-      [EnableQuery()]
       public CustomerDto Get(string key)
       {
          return this.Get().Single(dto => dto.Key == key);
+      }
+
+      public Dtos.Hrm.EmployeeDto GetRepresentative(string key)
+      {
+         return this.Get(key).Representative;
       }
    }
 }

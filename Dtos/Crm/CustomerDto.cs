@@ -11,11 +11,14 @@ namespace Platform.Api.Dtos.Crm
 {
    public class CustomerDto : Dto<string>
    {
+      public GroupDto Group { get; set; }
+
       [Key]
       public override string Key { get; set; }
 
-      public GroupDto Group { get; set; }
+      public string RepresentativeKey { get; set; }
 
+      [Contained]
       public EmployeeDto Representative { get; set; }
    }
 }

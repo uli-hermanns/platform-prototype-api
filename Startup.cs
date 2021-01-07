@@ -1,11 +1,15 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Formatter.Deserialization;
+using Microsoft.AspNet.OData.Routing.Conventions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OData;
 using Microsoft.OData.Edm;
 
 namespace Platform.Api
@@ -37,7 +41,18 @@ namespace Platform.Api
          {
             endpoints.MapControllers();
             endpoints.Select().Filter().Expand();
+
+            endpoints.MapODataRoute("CRM", "api/crm",
+              builder =>
+              {
+                 builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => this.GetCrmEdmModel());
+                 builder.AddService<IEnumerable<IODataRoutingConvention>>(Microsoft.OData.ServiceLifetime.Singleton,
+                     sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("CRM", endpoints.ServiceProvider));
+              });
+
+            /*
             endpoints.MapODataRoute("CRM", "api/crm", this.GetCrmEdmModel());
+            */
             endpoints.MapODataRoute("HRM", "api/hrm", this.GetHrmEdmModel());
          });
       }
@@ -45,6 +60,7 @@ namespace Platform.Api
       // This method gets called by the runtime. Use this method to add services to the container.
       public void ConfigureServices(IServiceCollection services)
       {
+         services.AddRouting();
          services.AddControllers();
          services.AddOData();
       }
