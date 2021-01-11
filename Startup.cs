@@ -1,16 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Extensions;
-using Microsoft.AspNet.OData.Formatter.Deserialization;
-using Microsoft.AspNet.OData.Routing.Conventions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Routing.Conventions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OData;
 using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+using Platform.Api.Core;
 
 namespace Platform.Api
 {
@@ -40,8 +38,9 @@ namespace Platform.Api
          app.UseEndpoints(endpoints =>
          {
             endpoints.MapControllers();
-            endpoints.Select().Filter().Expand();
+            // endpoints.Select().Filter().Expand();
 
+            /*
             endpoints.MapODataRoute("CRM", "api/crm",
               builder =>
               {
@@ -50,10 +49,19 @@ namespace Platform.Api
                      sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("CRM", endpoints.ServiceProvider));
               });
 
-            /*
-            endpoints.MapODataRoute("CRM", "api/crm", this.GetCrmEdmModel());
+            endpoints.MapODataRoute("HRM", "api/hrm",
+                 builder =>
+                 {
+                    builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => this.GetHrmEdmModel());
+                    builder.AddService<IEnumerable<IODataRoutingConvention>>(Microsoft.OData.ServiceLifetime.Singleton,
+                        sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("HRM", endpoints.ServiceProvider));
+                 });
+
             */
-            endpoints.MapODataRoute("HRM", "api/hrm", this.GetHrmEdmModel());
+            /*
+            endpoints.MapODataRoute("CRM", "crm", this.GetCrmEdmModel());
+            endpoints.MapODataRoute("HRM", "hrm", this.GetHrmEdmModel());
+            */
          });
       }
 
@@ -61,13 +69,19 @@ namespace Platform.Api
       public void ConfigureServices(IServiceCollection services)
       {
          services.AddRouting();
-         services.AddControllers();
-         services.AddOData();
+         services.AddOData(options =>
+         {
+            options
+               .Filter().Select().OrderBy().Count().SkipToken().Expand()
+               .AddModel("api/crm", this.GetCrmEdmModel())
+               .AddModel("api/hrm", this.GetHrmEdmModel());
+         }).ReplaceDefaultConventions();
       }
 
       public IEdmModel GetCrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
+         // builder.Namespace = "Crm";
          builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
          builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
 
@@ -77,6 +91,7 @@ namespace Platform.Api
       public IEdmModel GetHrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
+         // builder.Namespace = "Hrm";
          builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
          builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
 

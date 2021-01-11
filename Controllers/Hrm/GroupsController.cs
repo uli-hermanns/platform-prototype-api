@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Routing;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Platform.Api.Dtos.Hrm;
 
 namespace Platform.Api.Controllers.Hrm
 {
    [EnableQuery()]
-   [ODataRoutePrefix("api/hrm")]
-   public class GroupsController : ControllerBase
+   public class GroupsController : ODataController
    {
-      [ODataRoute(RouteName = "HRM")]
       [HttpGet]
       public IEnumerable<GroupDto> Get()
       {
          yield return new GroupDto { Key = "Hrm" };
+      }
+
+      public GroupDto Get(string key)
+      {
+         return this.Get().Single(dto => dto.Key == key);
       }
    }
 }
