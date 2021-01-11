@@ -6,7 +6,7 @@ namespace Platform.Api.Dtos.Crm
 {
    public class CustomerDto : Dto<string>
    {
-      // public GroupDto Group { get; set; }
+      public GroupDto Group { get; set; }
 
       [Key]
       public override string Key { get; set; }
