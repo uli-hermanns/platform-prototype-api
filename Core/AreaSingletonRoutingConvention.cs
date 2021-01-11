@@ -6,7 +6,7 @@ namespace Platform.Api.Core
    {
       public override bool AppliesToController(ODataControllerActionContext context)
       {
-         return context.IsArea() && base.AppliesToController(context);
+         return context.IsValidArea() && base.AppliesToController(context);
       }
    }
 }

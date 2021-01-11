@@ -38,30 +38,6 @@ namespace Platform.Api
          app.UseEndpoints(endpoints =>
          {
             endpoints.MapControllers();
-            // endpoints.Select().Filter().Expand();
-
-            /*
-            endpoints.MapODataRoute("CRM", "api/crm",
-              builder =>
-              {
-                 builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => this.GetCrmEdmModel());
-                 builder.AddService<IEnumerable<IODataRoutingConvention>>(Microsoft.OData.ServiceLifetime.Singleton,
-                     sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("CRM", endpoints.ServiceProvider));
-              });
-
-            endpoints.MapODataRoute("HRM", "api/hrm",
-                 builder =>
-                 {
-                    builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => this.GetHrmEdmModel());
-                    builder.AddService<IEnumerable<IODataRoutingConvention>>(Microsoft.OData.ServiceLifetime.Singleton,
-                        sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("HRM", endpoints.ServiceProvider));
-                 });
-
-            */
-            /*
-            endpoints.MapODataRoute("CRM", "crm", this.GetCrmEdmModel());
-            endpoints.MapODataRoute("HRM", "hrm", this.GetHrmEdmModel());
-            */
          });
       }
 
@@ -81,7 +57,6 @@ namespace Platform.Api
       public IEdmModel GetCrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
-         // builder.Namespace = "Crm";
          builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
          builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
 
@@ -91,7 +66,6 @@ namespace Platform.Api
       public IEdmModel GetHrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
-         // builder.Namespace = "Hrm";
          builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
          builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
 

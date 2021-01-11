@@ -7,7 +7,7 @@ namespace Platform.Api.Core
 {
    public static class Conventions
    {
-      public static bool IsArea(this ODataControllerActionContext context)
+      public static bool IsValidArea(this ODataControllerActionContext context)
       {
          var entityNamespace = context.EntityType?.Namespace.Split('.').Last();
          var controllerNamespace = context.Controller.ControllerType.Namespace.Split('.').Last();
