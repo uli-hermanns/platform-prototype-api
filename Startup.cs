@@ -1,14 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.OData;
-using Microsoft.AspNetCore.OData.Routing.Conventions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using Platform.Api.Core;
 
 namespace Platform.Api
 {
@@ -51,7 +48,7 @@ namespace Platform.Api
                .Filter().Select().OrderBy().Count().SkipToken().Expand()
                .AddModel("api/crm", this.GetCrmEdmModel())
                .AddModel("api/hrm", this.GetHrmEdmModel());
-         }).ReplaceDefaultConventions();
+         });
       }
 
       public IEdmModel GetCrmEdmModel()

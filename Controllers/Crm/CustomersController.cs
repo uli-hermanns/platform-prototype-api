@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Platform.Api.Dtos.Crm;
 
 namespace Platform.Api.Controllers.Crm
 {
    [EnableQuery()]
+   [ODataModel("api/crm")]
    public class CustomersController : ODataController
    {
       public IEnumerable<CustomerDto> Get()
