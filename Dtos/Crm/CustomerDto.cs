@@ -1,17 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.OData.ModelBuilder;
+﻿using Microsoft.OData.ModelBuilder;
 
 namespace Platform.Api.Dtos.Crm
 {
    public class CustomerDto : Dto<string>
    {
+      public ContactDto[] Contacts { get; set; } = new ContactDto[0];
+
       public GroupDto Group { get; set; }
 
-      [Key]
-      public override string Key { get; set; }
-
-      [Key]
-      public string ParentKey { get; set; }
+      public override string Id
+      {
+         get
+         {
+            return this.Key;
+         }
+         set
+         {
+            this.Key = value;
+         }
+      }
 
       [Contained]
       public Hrm.EmployeeDto Representative { get; set; }

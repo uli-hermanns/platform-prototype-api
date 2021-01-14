@@ -45,6 +45,7 @@ namespace Platform.Api
          services.AddOData(options =>
          {
             options
+               // .SetAttributeRouting(false)
                .Filter().Select().OrderBy().Count().SkipToken().Expand()
                .AddModel("api/crm", this.GetCrmEdmModel())
                .AddModel("api/hrm", this.GetHrmEdmModel());
@@ -54,9 +55,10 @@ namespace Platform.Api
       public IEdmModel GetCrmEdmModel()
       {
          var builder = new ODataConventionModelBuilder();
+         builder.EntitySet<Dtos.Crm.ContactDto>("Contacts");
          builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
          builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
-         // builder.EnableLowerCamelCase();
+         builder.EnableLowerCamelCase();
 
          return builder.GetEdmModel();
       }
@@ -66,7 +68,7 @@ namespace Platform.Api
          var builder = new ODataConventionModelBuilder();
          builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
          builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
-         // builder.EnableLowerCamelCase();
+         builder.EnableLowerCamelCase();
 
          return builder.GetEdmModel();
       }

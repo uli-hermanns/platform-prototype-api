@@ -1,7 +1,7 @@
 ﻿namespace Platform.Api.Dtos
 {
-   public abstract class Dto<TKey>
+   public abstract class Dto<TKey> : Dto
    {
-      public abstract TKey Key { get; set; }
+      public TKey Key { get; set; }
    }
 }

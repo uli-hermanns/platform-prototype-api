@@ -1,12 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Platform.Api.Dtos.Hrm
+﻿namespace Platform.Api.Dtos.Hrm
 {
    public class EmployeeDto : Dto<string>
    {
       public GroupDto Group { get; set; }
 
-      [Key]
-      public override string Key { get; set; }
+      public override string Id
+      {
+         get
+         {
+            return this.Key;
+         }
+         set
+         {
+            this.Key = value;
+         }
+      }
    }
 }

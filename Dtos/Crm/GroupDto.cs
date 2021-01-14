@@ -1,10 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Platform.Api.Dtos.Crm
+﻿namespace Platform.Api.Dtos.Crm
 {
    public class GroupDto : Dto<string>
    {
-      [Key]
-      public override string Key { get; set; }
+      public override string Id
+      {
+         get
+         {
+            return this.Key;
+         }
+         set
+         {
+            this.Key = value;
+         }
+      }
    }
 }
