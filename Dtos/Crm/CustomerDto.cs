@@ -10,6 +10,9 @@ namespace Platform.Api.Dtos.Crm
       [Key]
       public override string Key { get; set; }
 
+      [Key]
+      public string ParentKey { get; set; }
+
       [Contained]
       public Hrm.EmployeeDto Representative { get; set; }
 

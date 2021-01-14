@@ -13,18 +13,18 @@ namespace Platform.Api.Controllers.Crm
    {
       public IEnumerable<CustomerDto> Get()
       {
-         yield return new CustomerDto { Key = "Schmitz", Representative = new Dtos.Hrm.EmployeeDto { Key = "Uli" }, RepresentativeKey = "Uli" };
-         yield return new CustomerDto { Key = "Müller", Representative = new Dtos.Hrm.EmployeeDto { Key = "Ben" }, RepresentativeKey = "Ben" };
+         yield return new CustomerDto { Key = "Schmitz", ParentKey = "Vater", Representative = new Dtos.Hrm.EmployeeDto { Key = "Uli" }, RepresentativeKey = "Uli" };
+         yield return new CustomerDto { Key = "Müller", ParentKey = "Vater", Representative = new Dtos.Hrm.EmployeeDto { Key = "Ben" }, RepresentativeKey = "Ben" };
       }
 
-      public CustomerDto Get(string key)
+      public CustomerDto Get(string key, string parentKey)
       {
-         return this.Get().Single(dto => dto.Key == key);
+         return this.Get().Single(dto => dto.Key == key && dto.ParentKey == parentKey);
       }
 
       public Dtos.Hrm.EmployeeDto GetRepresentative(string key)
       {
-         return this.Get(key).Representative;
+         return this.Get().First().Representative;
       }
    }
 }
