@@ -56,6 +56,7 @@ namespace Platform.Api
          var builder = new ODataConventionModelBuilder();
          builder.EntitySet<Dtos.Crm.CustomerDto>("Customers");
          builder.EntitySet<Dtos.Crm.GroupDto>("Groups");
+         builder.EnableLowerCamelCase();
 
          return builder.GetEdmModel();
       }
@@ -65,6 +66,7 @@ namespace Platform.Api
          var builder = new ODataConventionModelBuilder();
          builder.EntitySet<Dtos.Hrm.EmployeeDto>("Employees");
          builder.EntitySet<Dtos.Hrm.GroupDto>("Groups");
+         builder.EnableLowerCamelCase();
 
          return builder.GetEdmModel();
       }
