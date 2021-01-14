@@ -31,10 +31,16 @@ namespace Platform.Api.Controllers.Crm
          return CustomersController.customers;
       }
 
-      [HttpGet]
       public CustomerDto Get(string key)
       {
          return this.Get().Single(dto => dto.Key == key);
+      }
+
+      [HttpGet]
+      [ODataRoute("customers({key})contacts({contactKey})")]
+      public ContactDto GetContactFromCustomer(string key, string contactKey)
+      {
+         return this.Get(key).Contacts.Where(contact => contact.Key == contactKey).Single();
       }
 
       [HttpGet]
